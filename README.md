@@ -8,7 +8,7 @@
   <li>Turcsik Zsófia - R7UJDO</li>
 </ul>
 </p>
-Making high resolution MRI images takes quite a long time and the movement of the patient makes it difficult to make high quality images, but from the low resolution pictures it is harder to gather information about the subject. 
+Making high resolution MRI images takes quite a long time and the movement of the patient makes it difficult to make high quality images, but from the low resolution pictures it is harder to gather information about the subject.
 
 In this projeck our objective is to convert low resolution heart MRIs to high resolution images with deep learning techniques. Our initial data consists of 4 dimensional high resolution images of shape $(216,256,10,t)$, where $t$ denotes time and differs troughout the 100 patients, but it's usually around 30. We also have some ground truth files, which helps with the segmentation of the pictures and includes the position of the heart on the MRIs.
 
