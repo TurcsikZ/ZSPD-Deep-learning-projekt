@@ -6,12 +6,13 @@ import matplotlib.pyplot as plt
 import os
 from PIL import Image
 import random
+import time
 
-path = 'C:/Users/Lenovo/Desktop/heart_data/'
+
 
 def bbox(gt_1, gt_2, extra=10):
     
-    # We have 2 segmentation instances for each patient. We want to use a single bbox for all the 10*30 images.
+    # We have 2 segmentation instances for each patient. We want to use a single bbox for all the images.
     # The segmentation pixels are either not 0 (where the heart is) or 0, we use this to get all the pixels where the heart should be.
     # From these pixels we can get the x,y boundaries of the box in which these pixels are
     # From these 4 numbers (y_min,y_max,x_min,x_max) we can construct the bbox
@@ -21,18 +22,19 @@ def bbox(gt_1, gt_2, extra=10):
         
     max_list=[0,256,0,256]
     
-    for y in range(gt_1.shape[0]):
-        for x in range(gt_1.shape[1]):
+    for j in range(gt_1.shape[2]):
+        for y in range(gt_1.shape[0]):
+            for x in range(gt_1.shape[1]):
 
-            if gt_1[y][x][1] != 0 or gt_2[y][x][1] != 0:
-                if y >= max_list[0]:
-                    max_list[0] = y
-                if y <= max_list[1]:
-                    max_list[1] = y
-                if x >= max_list[2]:
-                    max_list[2] = x
-                if x<= max_list[3]:
-                    max_list[3] = x
+                if gt_1[y][x][j] != 0 or gt_2[y][x][j] != 0:
+                    if y >= max_list[0]:
+                        max_list[0] = y
+                    if y <= max_list[1]:
+                        max_list[1] = y
+                    if x >= max_list[2]:
+                        max_list[2] = x
+                    if x<= max_list[3]:
+                        max_list[3] = x
                     
     max_list[0] = max_list[0] + extra
     max_list[1] = max_list[1] - extra
@@ -96,10 +98,10 @@ def crop_img(img, bbox_boundaries, kernel_size=None):
         x_min = bbox_boundaries[3]
         
     else:
-        y_max = bbox_boundaries[0] / kernel_size
-        y_min = bbox_boundaries[1] / kernel_size
-        x_max = bbox_boundaries[2] / kernel_size
-        x_min = bbox_boundaries[3] / kernel_size
+        y_max = int(bbox_boundaries[0] / kernel_size)
+        y_min = int(bbox_boundaries[1] / kernel_size)
+        x_max = int(bbox_boundaries[2] / kernel_size)
+        x_min = int(bbox_boundaries[3] / kernel_size)
         
     crop_img = np.zeros((img.shape[0],img.shape[1]))
     
@@ -111,69 +113,85 @@ def crop_img(img, bbox_boundaries, kernel_size=None):
                     
     return crop_img
 
-def data_transform_split(path, split, split_name):
+
+def patient_train_split(train_split=0.7, val_split=0.2, test_split=0.1):
     
-    # we structure our data for each patient the following way:
-    # each patient has a folder in which their 4d nifti file is split into 2d images, so if a patient has a 216x256x10x30 nifti file than the folder will contain 10x30 so 300 216x256 sized image
-    # for training there is a text file in which each row contains the path for one image for one patient and the bbox coordinates for that image, the rows are separated by "/n"
+    #70/20/10 %
+    #splits our 100 patients into train, validation and test sets
     
-    high_res_path_text_list = ""
-    path_text_list = ""
-    kernel_size = 2
-    #for patient in os.listdir(path + 'training/'):
-    for number in split:
-            
-        patient = "patient" + number
-        patient_list = []
-        nii_data = nib.load(os.path.join(path, 'training/', patient + '/', os.listdir(path + 'training/' + patient)[1])).get_fdata()
-
-        Shape = list(nii_data.shape)
-        Shape[0] = int(Shape[0] / (kernel_size))
-        Shape[1] = int(Shape[1] / (kernel_size))
-
-        downsample_data = np.zeros(Shape)
-
-        for i in range(nii_data.shape[2]):
-            for j in range(nii_data.shape[3]):
-
-                downsample_data[:,:,i,j] = downsample2d(nii_data[:,:,i,j], kernel_size)
-
-                seg_frame_1 = nib.load(os.path.join(path, 'training/', patient, os.listdir(path + 'training/' + patient)[3])).get_fdata()
-                seg_frame_2 = nib.load(os.path.join(path, 'training/', patient, os.listdir(path + 'training/' + patient)[5])).get_fdata()
-
-                bbox_boundaries = bbox(seg_frame_1, seg_frame_2)
-
-                high_res_img = Image.fromarray(nii_data[:,:,i,j])
-                high_res_img = high_res_img.convert("L")
-                high_res_img.save(path + "training_2/" + patient + "/" + patient + str(i + 1) + "_" + str(j + 1) +".jpg")
-                high_res_text = patient + "/" + patient + str(i + 1) + "_" + str(j + 1) +".jpg"
-
-                bbox_text = ""
-                bbox_text = str(bbox_boundaries[0]) + "," + str(bbox_boundaries[1]) + "," + str(bbox_boundaries[2]) + "," + str(bbox_boundaries[3])
-
-                path_text_list += high_res_text + "," + bbox_text + "/n"
-     
-
-    with open(path + "training_2/"+ split_name + "_data.txt", "w") as file:
-        file.write(path_text_list)
-        
-def patient_train_split(train_split=70, val_split=20, test_split=10):
+    L = 100
+    train_split = int(train_split * L)
+    val_split = int(val_split * L)
+    test_split = int(test_split * L)
     
-    #70/20/10
+    patient_list =  [i for i in range(L)]
     
-    patient_list =  [i for i in range(100)]
     for i in range(len(patient_list)):
-        if i < 10:
-            patient_list[i] = '00' + str(i)
-        if 10 <= i < 100:
-            patient_list[i] = '0' + str(i)
-        if i == 100:
-            patient_list[i] = str(i)
+        if i + 1 < 10:
+            patient_list[i] = '00' + str(i+1)
+        if 10 <= i + 1 < 100:
+            patient_list[i] = '0' + str(i+1)
+        if i + 1 == 100:
+            patient_list[i] = str(i+1)
             
     random.shuffle(patient_list)
 
     train_list = patient_list[:train_split]
-    val_list = patient_list[val_split:]
-    test_list = patient_list[train_split:test_split]
+    val_list = patient_list[train_split:train_split + val_split]
+    test_list = patient_list[train_split + val_split:]
     
     return (train_list, val_list, test_list)
+
+
+def data_transform_split(path, split, split_name):
+    
+    # we structure our data for each patient the following way:
+    # each patient has a folder in which their 4d nifti file is split into 2d images, so if a patient has a 216x256x10x30 nifti file than the folder will contain 10x30 (300) 216x256 sized image
+    # for training there is a text file in which each row contains the path for one image for one patient and the bbox coordinates for that image, the rows are separated by "/n"
+    # each patient is randomly split into the train/val/test sets
+    
+    high_res_path_text_list = ""
+    path_text_list = ""
+    kernel_size = 2
+    start_time = time.time()
+    
+    for number in split:
+            
+        patient = "patient" + number
+        patient_list = []
+        nii_data = nib.load(os.path.join(path, 'raw_data/', patient + '/', os.listdir(path + 'raw_data/' + patient)[1])).get_fdata()
+        
+        if not os.path.exists(path + split_name + '/' + patient):
+            os.makedirs(path + split_name + '/' + patient)
+        
+        print('Proccessing {} for the '.format(patient) + split_name + ' set...')
+        Shape = list(nii_data.shape)
+        Shape[0] = int(Shape[0] / (kernel_size))
+        Shape[1] = int(Shape[1] / (kernel_size))
+
+        seg_frame_1 = nib.load(os.path.join(path, 'raw_data/', patient, os.listdir(path + 'raw_data/' + patient)[3])).get_fdata()
+        seg_frame_2 = nib.load(os.path.join(path, 'raw_data/', patient, os.listdir(path + 'raw_data/' + patient)[5])).get_fdata()
+
+        bbox_boundaries = bbox(seg_frame_1, seg_frame_2)
+        
+        for i in range(nii_data.shape[2]):
+            for j in range(nii_data.shape[3]):
+
+                high_res_img = Image.fromarray(nii_data[:,:,i,j])
+                high_res_img = high_res_img.convert("L")
+                high_res_img.save(path + split_name + "/" + patient + "/" + patient + "_" + str(i + 1) + "_" + str(j + 1) +".jpg")
+                high_res_text = patient + "/" + patient + "_" + str(i + 1) + "_" + str(j + 1) +".jpg"
+
+                bbox_text = ""
+                bbox_text = str(bbox_boundaries[0]) + "," + str(bbox_boundaries[1]) + "," + str(bbox_boundaries[2]) + "," + str(bbox_boundaries[3])
+
+                path_text_list += high_res_text + "," + bbox_text + "\n"
+     
+
+    with open(path + split_name + "/" + split_name + "_data.txt", "w") as file:
+        file.write(path_text_list)
+    print("\n")
+    print("Done in {:.2f} seconds".format(time.time() - start_time))
+
+        
+
