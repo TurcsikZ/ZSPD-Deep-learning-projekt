@@ -159,7 +159,6 @@ def data_transform_split(path, split, split_name):
             
         patient = "patient" + number
         patient_list = []
-        print(sorted(os.listdir(path + 'raw_data/' + patient)))
         nii_data = nib.load(os.path.join(path, 'raw_data/', patient + '/', sorted(os.listdir(path + 'raw_data/' + patient))[1])).get_fdata()
         
         if not os.path.exists(path + split_name + '/' + patient):
