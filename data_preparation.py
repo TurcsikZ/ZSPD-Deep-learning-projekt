@@ -159,7 +159,7 @@ def data_transform_split(path, split, split_name):
             
         patient = "patient" + number
         patient_list = []
-        nii_data = nib.load(os.path.join(path, 'raw_data/', patient + '/', os.listdir(path + 'raw_data/' + patient)[1])).get_fdata()
+        nii_data = nib.load(os.path.join(path, 'raw_data/', patient + '/', sorted(os.listdir(path + 'raw_data/' + patient))[1])).get_fdata()
         
         if not os.path.exists(path + split_name + '/' + patient):
             os.makedirs(path + split_name + '/' + patient)
@@ -169,8 +169,8 @@ def data_transform_split(path, split, split_name):
         Shape[0] = int(Shape[0] / (kernel_size))
         Shape[1] = int(Shape[1] / (kernel_size))
 
-        seg_frame_1 = nib.load(os.path.join(path, 'raw_data/', patient, os.listdir(path + 'raw_data/' + patient)[3])).get_fdata()
-        seg_frame_2 = nib.load(os.path.join(path, 'raw_data/', patient, os.listdir(path + 'raw_data/' + patient)[5])).get_fdata()
+        seg_frame_1 = nib.load(os.path.join(path, 'raw_data/', patient, sorted(os.listdir(path + 'raw_data/' + patient))[3])).get_fdata()
+        seg_frame_2 = nib.load(os.path.join(path, 'raw_data/', patient, sorted(os.listdir(path + 'raw_data/' + patient))[5])).get_fdata()
 
         bbox_boundaries = bbox(seg_frame_1, seg_frame_2)
         
