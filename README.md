@@ -1,7 +1,7 @@
-# ZSPD-Deep-learning-projekt
+# ZSPD-Deep-learning-project
 <h1> Heart MRI Superresolution </h1>
 
-<h2> Members of the team: </h2>
+<h2> Members of the ZSPD team: </h2>
 <p> 
 <ul>
   <li>Fris Domonkos - WPOU2Z</li>
@@ -22,7 +22,7 @@
 
 <p>With the <b> data_preparation.py </b> codes we reshaped the data and saved the 4D pictures to $10t$ different 2D images, then saved them to training, validation and test folders, still separating the data by patients. We also saved the values of the bounding boxes for each picture in a text file for each folder.</p>
 
-<p> In the <b> data_preparation.py </b> code we prepared for converting the pictures to lower resolution images and prepared for segmentation. </p>
+<p> In the <b> data_preparation.py </b> code we prepared for converting the pictures to lower resolution images and prepared for segmentation. In the <b> data_discovering.ipynb </b> the original data and our most important functions are shown. </p>
 
 <h3> Folders and files in our repository</h3>
 
