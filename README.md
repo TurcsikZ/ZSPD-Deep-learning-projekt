@@ -26,4 +26,4 @@
 
 <h3> Folders and files in our repository</h3>
 
-<p> The data folder contains  the training, validation and test folders. Each folder contains the preprocessed image of the patient and a text file which will be used for modelling. Furthermore the <b> data_preparation.py </b> file contains the necessary functions for the jupyter notebook. The script and notebook are well commented.</p
+<p> The data folder contains the raw_data,the training, validation and test folders. The raw_data folder contains the origanal data. The other folders contain the preprocessed image of the patient and a text file which will be used for modelling. Furthermore the <b> data_preparation.py </b> file contains the necessary functions for the jupyter notebook. The script and notebook are commented.</p
