@@ -30,7 +30,7 @@
 
 <h2> Milestone 2. </h2>
 <h3> Training models </h3>
-<h4>1.SRGAN model  <a  href= '[https://github.com/eriklindernoren/PyTorch-GAN#super-resolution-gan](https://github.com/eriklindernoren/PyTorch-GAN)'> srgan </a></h4>
+<h4>1.SRGAN model  <a  href= 'https://github.com/eriklindernoren/PyTorch-GAN'> srgan </a></h4>
 <h5>1.1 SRGAN training </h5>
 
 <p> Steps: </p>
