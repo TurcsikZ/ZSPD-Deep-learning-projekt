@@ -26,4 +26,28 @@
 
 <h3> Folders and files in our repository</h3>
 
-<p> The data folder contains the raw_data,the training, validation and test folders. The raw_data folder contains the origanal data. The other folders contain the preprocessed image of the patient and a text file which will be used for modelling. Furthermore the <b> data_preparation.py </b> file contains the necessary functions for the jupyter notebook. The script and notebook are commented.</p
+<p> The data folder contains the raw_data,the training, validation and test folders. The raw_data folder contains the origanal data. The other folders contain the preprocessed image of the patient and a text file which will be used for modelling. Furthermore the <b> data_preparation.py </b> file contains the necessary functions for the jupyter notebook. The script and notebook are commented.</p>
+
+<h2> Milestone 2. </h2>
+<h3> Training models </h3>
+<h4> SRGAN model </h4>
+<h5> SRGAN training </h5>
+
+<p> Steps: </p>
+<p> 
+<ol>
+  <li>Download the 2d_data folder</li>
+  <li>Download the models folder</li>
+  <li>Run the script to the following way: python srgan.py</li>
+</ol>
+</p>
+
+<h5> SRGAN evaluation </h5>
+<p> eredmenyek domanal </p>
+
+<h4> DOMA's model </h4>
+<h5> Training </h5>
+
+
+
+<h5> Evaluation </h5>
