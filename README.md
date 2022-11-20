@@ -31,6 +31,7 @@
 <h2> Milestone 2. </h2>
 <h3> Training models </h3>
 <h4>1.SRGAN model  <a  href= 'https://github.com/eriklindernoren/PyTorch-GAN/tree/master/implementations/srgan'> citation </a></h4>
+<h4>We are using the model in the cited github repo. </h4>
 <h5>1.1 SRGAN training </h5>
 
 <p> Steps: </p>
@@ -46,7 +47,7 @@
 <p> In the test_model.pynb notebook </p>
 
 <h4>2. 2D WGAN <a  href= 'https://github.com/Hadrien-Cornier/E6040-super-resolution-project'> citation </a> </h4>
-<h5>This is basically the same model used in the repo, but changed so it works with 2D single images. </h5>
+<h4>This is basically the same model used in the citation, but changed so it works with 2D single images. </h4>
 <h5>2.1 Training </h5>
 
 <p> Steps: </p>
