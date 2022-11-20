@@ -56,4 +56,4 @@
 <p> In the test_model.pynb notebook. </p>
 
 <h6>3. 3D WGAN </h6>
-<h6> We were planning to train the pretrained model the <a  href= 'https://github.com/Hadrien-Cornier/E6040-super-resolution-project'> WGAN_citation </a> has on our 3D data, however we ran into some difficulties so we changed to the 2D above.</h6>
+<h6> We were planning to train the pretrained model the <a  href= 'https://github.com/Hadrien-Cornier/E6040-super-resolution-project'> WGAN_citation </a> has on our 3D data, however we ran into some difficulties so we changed to the 2D model above.</h6>
