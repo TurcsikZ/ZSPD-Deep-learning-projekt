@@ -46,6 +46,7 @@
 <p> In the test_model.pynb notebook </p>
 
 <h4>2. 2D WGAN <a  href= 'https://github.com/Hadrien-Cornier/E6040-super-resolution-project'> citation </a> </h4>
+<h5>This is basically the same model used in the repo, but changed so it works with 2D single images. </h5>
 <h5>2.1 Training </h5>
 
 <p> Steps: </p>
