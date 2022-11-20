@@ -30,7 +30,7 @@
 
 <h2> Milestone 2. </h2>
 <h3> Training models </h3>
-<h4>1.SRGAN model  <a  href= 'https://github.com/eriklindernoren/PyTorch-GAN/tree/master/implementations/srgan'> citation </a></h4>
+<h4>1.SRGAN model  <a  href= 'https://github.com/eriklindernoren/PyTorch-GAN/tree/master/implementations/srgan'> SRGAN_citation </a></h4>
 <h4>We are using the model in the cited github repo. </h4>
 <h5>1.1 SRGAN training </h5>
 
@@ -46,7 +46,7 @@
 <h5>1.2 SRGAN evaluation </h5>
 <p> In the test_model.pynb notebook. </p>
 
-<h4>2. 2D WGAN <a  href= 'https://github.com/Hadrien-Cornier/E6040-super-resolution-project'> citation </a> </h4>
+<h4>2. 2D WGAN <a  href= 'https://github.com/Hadrien-Cornier/E6040-super-resolution-project'> WGAN_citation </a> </h4>
 <h4>This is basically the same model used in the citation, but changed so it works with 2D single images. </h4>
 <h5>2.1 Training </h5>
 
@@ -56,4 +56,4 @@
 <p> In the test_model.pynb notebook. </p>
 
 <h6>3. 3D WGAN </h6>
-<h6> We were planning to train the pretrained model the citation has on our 3D data, however we ran into some difficulties so we might not be able to finish its implementation.</h6>
+<h6> We were planning to train the pretrained model the <a  href= 'https://github.com/Hadrien-Cornier/E6040-super-resolution-project'> WGAN_citation </a> has on our 3D data, however we ran into some difficulties so we changed to the 2D above.</h6>
