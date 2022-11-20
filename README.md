@@ -50,18 +50,10 @@
 <h4>This is basically the same model used in the citation, but changed so it works with 2D single images. </h4>
 <h5>2.1 Training </h5>
 
-<p> Steps: </p>
-<p> 
-<ol>
-  <li>Download the 2D_DATA folder</li>
-  <li>Download the models folder</li>
-  <li>Run the script to the following way: python srgan.py</li>
-</ol>
-</p>
-
+<p> In the folder there is a test_train </p>
 
 <h5>2.2 Evaluation </h5>
-<p> In the test_model.pynb notebook </p>
+<p> In the test_model.pynb notebook, change the necessary paths and run in. </p>
 
 <h6>3. 3D WGAN </h6>
-<h6> We were planning to train the pretrained model the citation gives on our data, however we ran into some difficulties so we might not be able to finish its implementation</h6>
+<h6> We were planning to train the pretrained model the citation gives on our data, however we ran into some difficulties so we might not be able to finish its implementation.</h6>
