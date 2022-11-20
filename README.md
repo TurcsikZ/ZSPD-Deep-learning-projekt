@@ -30,7 +30,7 @@
 
 <h2> Milestone 2. </h2>
 <h3> Training models </h3>
-<h4>1.SRGAN model  <a  href= 'https://github.com/eriklindernoren/PyTorch-GAN/tree/master/implementations/srgan'> srgan </a></h4>
+<h4>1.SRGAN model  <a  href= 'https://github.com/eriklindernoren/PyTorch-GAN/tree/master/implementations/srgan'> citation </a></h4>
 <h5>1.1 SRGAN training </h5>
 
 <p> Steps: </p>
@@ -45,7 +45,7 @@
 <h5>1.2 SRGAN evaluation </h5>
 <p> eredmenyek domanal </p>
 
-<h4>2. DOMA's model </h4>
+<h4>2. 2D WGAN <a  href= 'https://github.com/Hadrien-Cornier/E6040-super-resolution-project'> citation </a> </h4>
 <h5>2.1 Training </h5>
 
 
