@@ -50,7 +50,7 @@
 <h4>This is basically the same model used in the citation, but changed so it works with 2D single images. </h4>
 <h5>2.1 Training </h5>
 
-<p> In the folder there is a test_train.pynb notebook, change the necessary paths and run in. </p>
+<p> In the folder there is a test_train.pynb notebook, change the necessary paths and run it. </p>
 
 <h5>2.2 Evaluation </h5>
 <p> In the test_model.pynb notebook. </p>
