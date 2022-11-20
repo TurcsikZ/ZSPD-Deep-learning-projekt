@@ -56,4 +56,4 @@
 <p> In the test_model.pynb notebook. </p>
 
 <h6>3. 3D WGAN </h6>
-<h6> We were planning to train the pretrained model the citation gives on our data, however we ran into some difficulties so we might not be able to finish its implementation.</h6>
+<h6> We were planning to train the pretrained model the citation has on our data, however we ran into some difficulties so we might not be able to finish its implementation.</h6>
