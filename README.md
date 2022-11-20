@@ -43,11 +43,20 @@
 </p>
 
 <h5>1.2 SRGAN evaluation </h5>
-<p> eredmenyek domanal </p>
+<p> In the test_model.pynb notebook </p>
 
 <h4>2. 2D WGAN <a  href= 'https://github.com/Hadrien-Cornier/E6040-super-resolution-project'> citation </a> </h4>
 <h5>2.1 Training </h5>
 
+<p> Steps: </p>
+<p> 
+<ol>
+  <li>Download the 2d_data folder</li>
+  <li>Download the models folder</li>
+  <li>Run the script to the following way: python srgan.py</li>
+</ol>
+</p>
 
 
 <h5>2.2 Evaluation </h5>
+<p> In the test_model.pynb notebook </p>
