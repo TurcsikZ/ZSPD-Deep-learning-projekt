@@ -37,7 +37,7 @@
 <p> Steps: </p>
 <p> 
 <ol>
-  <li>Download the 2d_data folder</li>
+  <li>Download the 2D_DATA folder</li>
   <li>Download the models folder</li>
   <li>Run the script to the following way: python srgan.py --dataset_name path/2D_DATA/TRAIN/*</li>
 </ol>
