@@ -4,6 +4,7 @@ import numpy as np
 import math
 import itertools
 import sys
+import csv
 
 import torchvision.transforms as transforms
 from torchvision.utils import save_image, make_grid
@@ -13,13 +14,15 @@ from torch.autograd import Variable
 
 from models import *
 from datasets import *
+from metrics import *
 
 import torch.nn as nn
 import torch.nn.functional as F
 import torch
 
+
 os.makedirs("images", exist_ok=True)
-os.makedirs("saved_models", exist_ok=True)
+os.makedirs("saved_models3", exist_ok=True)
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--epoch", type=int, default=0, help="epoch to start training from")
@@ -64,8 +67,8 @@ if cuda:
 
 if opt.epoch != 0:
     # Load pretrained models
-    generator.load_state_dict(torch.load("saved_models/generator_%d.pth"))
-    discriminator.load_state_dict(torch.load("saved_models/discriminator_%d.pth"))
+    generator.load_state_dict(torch.load("saved_models3/generator_%d.pth"))
+    discriminator.load_state_dict(torch.load("saved_models3/discriminator_%d.pth"))
 
 # Optimizers
 # TODO: B1, B2,LR LIST, USE OTHER OPTIMIZER ?(NOT JUST ADAM?)
@@ -86,12 +89,12 @@ dataloader = DataLoader(
     num_workers=opt.n_cpu,
 )
 
-loss_saving_path = "./saved_models/loss.txt"
+loss_saving_path = "./saved_models3/loss.csv"
 
 # ----------
 #  Training
 # ----------
-save_list = []
+
 for epoch in range(opt.epoch, opt.n_epochs):
     for i, imgs in enumerate(dataloader):
 
@@ -141,7 +144,14 @@ for epoch in range(opt.epoch, opt.n_epochs):
 
         loss_D.backward()
         optimizer_D.step()
+        
+        # ----------
+        #  Metrics
+        # ----------
 
+        ssim_value = ssim(imgs_hr, gen_hr.detach())
+        psnr_value = psnr(imgs_hr, gen_hr.detach())
+        nrmse_value = nrmse(imgs_hr, gen_hr.detach())
         # --------------
         #  Log Progress
         # --------------
@@ -151,11 +161,15 @@ for epoch in range(opt.epoch, opt.n_epochs):
             
         )
         
-        save_list.append("[Epoch %d/%d] [Batch %d/%d] [D loss: %f] [G loss: %f]" % (epoch, opt.n_epochs,i, len(dataloader),loss_D.item(), loss_G.item())
-            
-        )
-        
         sys.stdout.write('\n')
+        
+        with open("./saved_models3/loss_%d.csv" % epoch,'a',encoding="UTF8") as file:
+            writer = csv.writer(file)
+            writer.writerow([epoch, i,loss_D.item(),loss_G.item(), 
+                             ssim_value[0], ssim_value[1], ssim_value[2], ssim_value[3],
+                             psnr_value[0], psnr_value[1], psnr_value[2], psnr_value[3],
+                             nrmse_value[0], nrmse_value[1], nrmse_value[2], nrmse_value[3],
+                            ])
 
         batches_done = epoch * len(dataloader) + i
         if batches_done % opt.sample_interval == 0:
@@ -168,6 +182,5 @@ for epoch in range(opt.epoch, opt.n_epochs):
 
     if opt.checkpoint_interval != -1 and epoch % opt.checkpoint_interval == 0:
         # Save model checkpoints
-        torch.save(generator.state_dict(), "./saved_models/generator_%d.pth" % epoch)
-        torch.save(discriminator.state_dict(), "./saved_models/discriminator_%d.pth" % epoch)
-        torch.save(save_list, "./saved_models/loss_%d.txt" % epoch)
+        torch.save(generator.state_dict(), "./saved_models3/generator_%d.pth" % epoch)
+        torch.save(discriminator.state_dict(), "./saved_models3/discriminator_%d.pth" % epoch)
