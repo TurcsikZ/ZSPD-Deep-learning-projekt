@@ -21,15 +21,15 @@ import torch.nn.functional as F
 import torch
 
 
-os.makedirs("images", exist_ok=True)
-os.makedirs("saved_models3", exist_ok=True)
+os.makedirs("images5", exist_ok=True)
+os.makedirs("saved_models5", exist_ok=True)
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--epoch", type=int, default=0, help="epoch to start training from")
-parser.add_argument("--n_epochs", type=int, default=3, help="number of epochs of training")
+parser.add_argument("--n_epochs", type=int, default=2, help="number of epochs of training")
 parser.add_argument("--dataset_name", type=str, default="TRAIN/*", help="name of the dataset")
-parser.add_argument("--batch_size", type=int, default=4, help="size of the batches")
-parser.add_argument("--lr", type=float, default=0.0002, help="adam: learning rate")
+parser.add_argument("--batch_size", type=int, default=8, help="size of the batches")
+parser.add_argument("--lr", type=float, default=0.001, help="adam: learning rate")
 parser.add_argument("--b1", type=float, default=0.5, help="adam: decay of first order momentum of gradient")
 parser.add_argument("--b2", type=float, default=0.999, help="adam: decay of first order momentum of gradient")
 parser.add_argument("--decay_epoch", type=int, default=100, help="epoch from which to start lr decay")
@@ -37,10 +37,13 @@ parser.add_argument("--n_cpu", type=int, default=8, help="number of cpu threads 
 parser.add_argument("--hr_height", type=int, default=256, help="high res. image height")
 parser.add_argument("--hr_width", type=int, default=256, help="high res. image width")
 parser.add_argument("--channels", type=int, default=3, help="number of image channels")
-parser.add_argument("--sample_interval", type=int, default=100, help="interval between saving image samples")
+parser.add_argument("--sample_interval", type=int, default=500, help="interval between saving image samples")
 parser.add_argument("--checkpoint_interval", type=int, default=1, help="interval between model checkpoints")
 opt = parser.parse_args()
 print(opt)
+
+with open("./saved_models5/parameters.txt",'a',encoding="UTF8") as file:
+    file.write(str(opt))
 
 cuda = torch.cuda.is_available()
 
@@ -67,8 +70,8 @@ if cuda:
 
 if opt.epoch != 0:
     # Load pretrained models
-    generator.load_state_dict(torch.load("saved_models3/generator_%d.pth"))
-    discriminator.load_state_dict(torch.load("saved_models3/discriminator_%d.pth"))
+    generator.load_state_dict(torch.load("saved_models5/generator_%d.pth"))
+    discriminator.load_state_dict(torch.load("saved_models5/discriminator_%d.pth"))
 
 # Optimizers
 # TODO: B1, B2,LR LIST, USE OTHER OPTIMIZER ?(NOT JUST ADAM?)
@@ -85,11 +88,11 @@ Tensor = torch.cuda.FloatTensor if cuda else torch.Tensor
 dataloader = DataLoader(
     ImageDataset("/notebooks/test_model/%s" % opt.dataset_name, hr_shape=hr_shape),
     batch_size=opt.batch_size,
-    shuffle=True,
+    shuffle=False,
     num_workers=opt.n_cpu,
 )
 
-loss_saving_path = "./saved_models3/loss.csv"
+loss_saving_path = "./saved_models5/loss.csv"
 
 # ----------
 #  Training
@@ -163,7 +166,7 @@ for epoch in range(opt.epoch, opt.n_epochs):
         
         sys.stdout.write('\n')
         
-        with open("./saved_models3/loss_%d.csv" % epoch,'a',encoding="UTF8") as file:
+        with open("./saved_models5/loss_%d.csv" % epoch,'a',encoding="UTF8") as file:
             writer = csv.writer(file)
             writer.writerow([epoch, i,loss_D.item(),loss_G.item(), 
                              ssim_value[0], ssim_value[1], ssim_value[2], ssim_value[3],
@@ -175,12 +178,16 @@ for epoch in range(opt.epoch, opt.n_epochs):
         if batches_done % opt.sample_interval == 0:
             # Save image grid with upsampled inputs and SRGAN outputs
             imgs_lr = nn.functional.interpolate(imgs_lr, scale_factor=4)
+            imgs_hr = nn.functional.interpolate(imgs_hr, scale_factor=4)
             gen_hr = make_grid(gen_hr, nrow=1, normalize=True)
             imgs_lr = make_grid(imgs_lr, nrow=1, normalize=True)
+            imgs_hr = make_grid(imgs_hr, nrow=1, normalize=True)
             img_grid = torch.cat((imgs_lr, gen_hr), -1)
-            save_image(img_grid, "images/%d.png" % batches_done, normalize=False)
+            
+            save_image(img_grid, "images5/%d.png" % batches_done, normalize=False)
+            save_image(imgs_hr, "images5/%d_hr.png" % batches_done, normalize=False)
 
     if opt.checkpoint_interval != -1 and epoch % opt.checkpoint_interval == 0:
         # Save model checkpoints
-        torch.save(generator.state_dict(), "./saved_models3/generator_%d.pth" % epoch)
-        torch.save(discriminator.state_dict(), "./saved_models3/discriminator_%d.pth" % epoch)
+        torch.save(generator.state_dict(), "./saved_models5/generator_%d.pth" % epoch)
+        torch.save(discriminator.state_dict(), "./saved_models5/discriminator_%d.pth" % epoch)
