@@ -3,9 +3,10 @@ import torch
 import numpy as np
 
 def ssim(img_true, img_test):
-
-    img_true = img_true.cpu().numpy()
-    img_true = np.moveaxis(img_true, 1, 3)
+    # Using .cpu() converter because we used gpu 
+    img_true = img_true.cpu().numpy() 
+    img_true = np.moveaxis(img_true, 1, 3) 
+    #  metrics.structural_similarity function accepts numpy-s where the color channel is end of the array(example: (256,256,3)
     
     img_test = img_test.cpu().numpy()
     img_test = np.moveaxis(img_test, 1, 3)
@@ -16,7 +17,7 @@ def ssim(img_true, img_test):
     return ssim
 
 def psnr(img_true, img_test,data_range=None):
-    
+    # Rewrite a type and put the correct float range (-1,1)
     img_true = img_true.cpu().numpy().astype(float)/256
     img_true = np.moveaxis(img_true, 1, 3)
     
