@@ -23,9 +23,9 @@ if __name__ == '__main__':
     import torch.nn.functional as F
     import torch
     
-    images = "images4"
-    saved_model = "saved_model4"
-    srgan_model = "srgan_model4"
+    images = "images"
+    saved_model = "saved_model"
+    srgan_model = "srgan_model"
     lr=1e-05
 
     os.makedirs(images, exist_ok=True)
@@ -34,7 +34,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--epoch", type=int, default=0, help="epoch to start training from")
     parser.add_argument("--n_epochs", type=int, default=1, help="number of epochs of training")
-    parser.add_argument("--dataset_name", type=str, default="TRAIN/*", help="name of the dataset")
+    parser.add_argument("--dataset_name", type=str, default="GT_VAL/*", help="name of the dataset")
     parser.add_argument("--batch_size", type=int, default=8, help="size of the batches")
     parser.add_argument("--lr", type=float, default=lr, help="adam: learning rate")
     parser.add_argument("--b1", type=float, default=0.5, help="adam: decay of first order momentum of gradient")
@@ -90,27 +90,16 @@ if __name__ == '__main__':
         generator.load_state_dict(torch.load(saved_model + "/generator_%d.pth"))
         discriminator.load_state_dict(torch.load(saved_model + "/discriminator_%d.pth"))
 
-    # Optimizers
-    # TODO: B1, B2,LR LIST, USE OTHER OPTIMIZER ?(NOT JUST ADAM?)
-    '''
-    lr_list = [0.1,0,001,0.002,0.0001,0.0002]
-    b1_list = [0.5,0.999]
-    b2_list = [0.5,0.999]
-    '''
-    optimizer_G = torch.optim.Adam(generator.parameters(), lr=opt.lr, betas=(opt.b1, opt.b2))
-    optimizer_D = torch.optim.Adam(discriminator.parameters(), lr=opt.lr, betas=(opt.b1, opt.b2))
-
     Tensor = torch.cuda.FloatTensor if cuda else torch.Tensor
             
     print("Starting validation")
     dataloader = DataLoader(
-        ImageDataset("D:/DLP/SRGAN/data/GT_VAL/*", hr_shape=hr_shape),
+        ImageDataset("../GT_data/GT_VAL/*", hr_shape=hr_shape),
         batch_size=opt.batch_size,
         shuffle=False,
         num_workers=opt.n_cpu,
     )
 
-    loss_saving_path = "./"+saved_model+"/val_loss.csv"
 
     # ----------
     #  Validation
