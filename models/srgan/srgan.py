@@ -20,7 +20,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch
 
-
+# Creating folders
 os.makedirs("images", exist_ok=True)
 os.makedirs("saved_models", exist_ok=True)
 
@@ -42,6 +42,7 @@ parser.add_argument("--checkpoint_interval", type=int, default=1, help="interval
 opt = parser.parse_args()
 print(opt)
 
+# Writing out the parameters into a text file
 with open("./saved_models/parameters.txt",'a',encoding="UTF8") as file:
     file.write(str(opt))
 
@@ -68,6 +69,7 @@ if cuda:
     criterion_GAN = criterion_GAN.cuda()
     criterion_content = criterion_content.cuda()
 
+# Loading in wieghts in case of a pretrained model
 if opt.epoch != 0:
     # Load pretrained models
     generator.load_state_dict(torch.load("saved_models6/generator_%d.pth"))
@@ -121,7 +123,8 @@ for epoch in range(opt.epoch, opt.n_epochs):
 
         # Total loss
         loss_G = loss_content + 1e-3 * loss_GAN
-
+        
+        # Backpropagation
         loss_G.backward()
         optimizer_G.step()
 
@@ -137,7 +140,8 @@ for epoch in range(opt.epoch, opt.n_epochs):
 
         # Total loss
         loss_D = (loss_real + loss_fake) / 2
-
+        
+        # Backpropagation
         loss_D.backward()
         optimizer_D.step()
         
@@ -151,7 +155,8 @@ for epoch in range(opt.epoch, opt.n_epochs):
         # --------------
         #  Log Progress
         # --------------
-
+        
+        # Writing out logs
         sys.stdout.write(
             "[Epoch %d/%d] [Batch %d/%d] [D loss: %f] [G loss: %f]" % (epoch, opt.n_epochs,i, len(dataloader),loss_D.item(), loss_G.item())
             
@@ -159,6 +164,7 @@ for epoch in range(opt.epoch, opt.n_epochs):
         
         sys.stdout.write('\n')
         
+        # Saving log progress into a csv file for evaluation
         with open("./saved_models/loss_%d.csv" % epoch,'a',encoding="UTF8") as file:
             writer = csv.writer(file)
             writer.writerow([epoch, i,loss_D.item(),loss_G.item(), 
