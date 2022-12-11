@@ -26,7 +26,9 @@
 
 <h3> Folders and files in our repository</h3>
 
-<p> The data folder contains the raw_data,the training, validation and test folders. The raw_data folder contains the origanal data. The other folders contain the preprocessed image of the patient and a text file which will be used for modelling. Furthermore the <b> data_preparation.py </b> file contains the necessary functions for the jupyter notebook. The script and notebook are commented.</p>
+<p> The data folder contains the raw_data,the train, validation and test folders. The raw_data folder contains the origanal data. The other folders contain the preprocessed image of the patient and a text file which will be used for modeling. The 2D_DATA folder contains the 2D images which splitted as data folder. The GT_data folder contains the ground truth images which spilled as before.
+
+The data_manipulation folder contains all the jupyter notebooks which we used for create our datasets. The script and notebooks are commented.</p>
 
 <h2> Milestone 2. </h2>
 <h3> Training models </h3>
