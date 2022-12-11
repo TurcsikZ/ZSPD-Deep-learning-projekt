@@ -26,9 +26,13 @@
 
 <h3> Folders and files in our repository</h3>
 
-<p> The data folder contains the raw_data,the train, validation and test folders. The raw_data folder contains the origanal data. The other folders contain the preprocessed image of the patient and a text file which will be used for modeling. The 2D_DATA folder contains the 2D images which splitted as data folder. The GT_data folder contains the ground truth images which spilled as before.
+<p> The data folder contains the raw_data,the train, validation and test folders. The raw_data folder contains the origanal data. The other folders contain the preprocessed image of the patient and a text file which will be used for modeling.</p>
 
-The data_manipulation folder contains all the jupyter notebooks which we used for create our datasets. The script and notebooks are commented.</p>
+<p> The 2D_DATA folder contains the 2D images which splitted as data folder. The GT_data folder contains the ground truth images which splitted as before. </p>
+
+<p> The data_manipulation folder contains all the jupyter notebooks which we used for create our datasets. The script and notebooks are commented.</p>
+
+<p> The models folder contains all the results and models code which we used for the training and validation. </p> 
 
 <h2> Milestone 2. </h2>
 <p> We used the <a  href= 'https://www.paperspace.com/'> paperspace </a> platform to run our models.It has an own pytorch enviroment. </p>
