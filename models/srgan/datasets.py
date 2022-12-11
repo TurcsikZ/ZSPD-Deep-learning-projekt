@@ -36,6 +36,7 @@ class ImageDataset(Dataset):
     def __getitem__(self, index):
         img = Image.open(self.files[index % len(self.files)])
         
+        # Converting our greyscale images to RGB
         img = img.convert('RGB')
 
         img_lr = self.lr_transform(img)
