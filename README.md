@@ -45,7 +45,7 @@ The data_manipulation folder contains all the jupyter notebooks which we used fo
   <li>Run the script in the following way: python srgan.py --dataset_name path/2D_DATA/TRAIN/*</li>
   <li>Using the same script to continue the training with pre-trained models </li>
 </ol>
-IMPORTANT: When the model is being trained again, we used --dataset_name path/GT_data/GT_TRAIN/* and we gave our model the saved discriminator and generator weights. Furthermore we used the following learning rates: [0.001, 0.0002, 0.00001]. We did not change other parameters.
+IMPORTANT: When the model is being retrained, we used --dataset_name path/GT_data/GT_TRAIN/* and we gave our model the saved discriminator and generator weights. Furthermore we used the following learning rates: [0.001, 0.0002, 0.00001]. We did not change other parameters.
 </p>
 
 <h5>1.2 SRGAN evaluation </h5>
