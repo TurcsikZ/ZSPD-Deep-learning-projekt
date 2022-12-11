@@ -31,6 +31,7 @@
 The data_manipulation folder contains all the jupyter notebooks which we used for create our datasets. The script and notebooks are commented.</p>
 
 <h2> Milestone 2. </h2>
+<p> We used the <a  href= 'https://www.paperspace.com/'> paperspace </a> platform to run our models.It has an own pytorch enviroment. </p>
 <h3> Training models </h3>
 <h4>1.SRGAN model  <a  href= 'https://github.com/eriklindernoren/PyTorch-GAN/tree/master/implementations/srgan'> SRGAN_citation </a></h4>
 <h4>We are using the model in the cited github repo. </h4>
@@ -39,10 +40,12 @@ The data_manipulation folder contains all the jupyter notebooks which we used fo
 <p> Steps: </p>
 <p> 
 <ol>
-  <li>Download the 2D_DATA folder and unzip the data</li>
+  <li>Download the 2D_DATA, GT_data folder and unzip the data</li>
   <li>Download the srgan folder</li>
   <li>Run the script in the following way: python srgan.py --dataset_name path/2D_DATA/TRAIN/*</li>
+  <li>Using the same script to continue the training with pre-trained models </li>
 </ol>
+IMPORTANT: When the model is being trained again, we used --dataset_name path/GT_data/GT_TRAIN/* and we gave our model the saved discriminator and generator weights. Furthermore we used the following learning rates: [0.001, 0.0002, 0.00001]. We did not change other parameters.
 </p>
 
 <h5>1.2 SRGAN evaluation </h5>
