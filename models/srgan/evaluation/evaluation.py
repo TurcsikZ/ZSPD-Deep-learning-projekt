@@ -22,6 +22,7 @@ def load_csv(file_path):
     red_df = df[metrics]
     return  red_df
 
+# Plots the metrics into graphs
 def plot(ind_list:list, df:pd.DataFrame, metrics_dict=metrics_dict):
     color = ['blue','green','red','gray','orange']
     for i,key in enumerate(metrics_dict.keys()):
@@ -32,7 +33,8 @@ def plot(ind_list:list, df:pd.DataFrame, metrics_dict=metrics_dict):
         
         plt.plot(ind_list, df[key], color=color[i])
         plt.show()
-        
+
+# Plots the difference of two dataframes
 def diff_plot(df_model1, df_model2, ind_list,metrics_dict=metrics_dict):
     color = ['blue','green','red','gray','orange']
     for i,key in enumerate(metrics_dict.keys()):
@@ -46,6 +48,7 @@ def diff_plot(df_model1, df_model2, ind_list,metrics_dict=metrics_dict):
         plt.plot(ind_list, diff, color=color[i])
         plt.show()
 
+# Gives the average of the metrics
 def stats(df):
     
     metrics = ["loss_D", "loss_G",'ssim_avg','psnr_avg','nrmse_avg']
