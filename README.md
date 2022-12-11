@@ -33,6 +33,7 @@
 <p> The data_manipulation folder contains all the jupyter notebooks which we used for create our datasets. The script and notebooks are commented.</p>
 
 <p> The models folder contains all the results and models code which we used for the training and validation. </p> 
+<p> Documentation folder contains the abstracts and the documentation files.</p> 
 
 <h2> Milestone 2. </h2>
 <p> We used the <a  href= 'https://www.paperspace.com/'> paperspace </a> platform to run our models.It has an own pytorch enviroment. </p>
