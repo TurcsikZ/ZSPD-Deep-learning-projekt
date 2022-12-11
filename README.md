@@ -45,11 +45,14 @@ The data_manipulation folder contains all the jupyter notebooks which we used fo
   <li>Run the script in the following way: python srgan.py --dataset_name path/2D_DATA/TRAIN/*</li>
   <li>Using the same script to continue the training with pre-trained models </li>
 </ol>
-IMPORTANT: When the model is being retrained, we used --dataset_name path/GT_data/GT_TRAIN/* and we gave our model the saved discriminator and generator weights. Furthermore we used the following learning rates: [0.001, 0.0002, 0.00001]. We did not change other parameters.
+IMPORTANT: 
+When the model is being retrained, we used --dataset_name path/GT_data/GT_TRAIN/* and we gave our model the saved discriminator and generator weights. Furthermore we used the following learning rates: [0.001, 0.0002, 0.00001]. We did not change other parameters.
 </p>
 
 <h5>1.2 SRGAN evaluation </h5>
-<p> In the test_model.pynb notebook. </p>
+<p> For the evaluation we run the models/srgan/evaluation/srgan_val.py file. For the first evaluation of the retrained models we used the GT_data/GT_VAl set. The evaluation of the final model we used the same py file with GT_data/GT_TEST set. </p>
+<p>Run the script in the following way(dataset can be changed): python srgan_val.py --dataset_name path/GT_data/GT_VAl/* </p>
+<p> The results of the evaluation are in the models/srgan/evaluation folder. The necessary files are the following: train_test_model.ipynb, val_test_model.ipynb, final_test.ipynb .</p>
 
 <h4>2. 2D WGAN <a  href= 'https://github.com/Hadrien-Cornier/E6040-super-resolution-project'> WGAN_citation </a> </h4>
 <h4>This is basically the same model used in the citation, but we modified it, so it works with 2D single images. </h4>
